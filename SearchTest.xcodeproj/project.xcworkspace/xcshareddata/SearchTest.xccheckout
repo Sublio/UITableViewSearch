@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>006E253F-8183-4F2B-A160-4E8BB37BB4EE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SearchTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>58A0AFD615B6BBE3F5DADB42BB4201D1C58C1053</key>
+		<string>github.com:Sublio/UITableViewSearch.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SearchTest.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>58A0AFD615B6BBE3F5DADB42BB4201D1C58C1053</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:Sublio/UITableViewSearch.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>58A0AFD615B6BBE3F5DADB42BB4201D1C58C1053</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>58A0AFD615B6BBE3F5DADB42BB4201D1C58C1053</string>
+			<key>IDESourceControlWCCName</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>58A0AFD615B6BBE3F5DADB42BB4201D1C58C1053</string>
+			<key>IDESourceControlWCCName</key>
+			<string>UITableViewSearch</string>
+		</dict>
+	</array>
+</dict>
+</plist>
