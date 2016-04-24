@@ -14,7 +14,7 @@
 
 
 @property (strong, nonatomic) NSArray* namesArray;
-
+@property (strong, nonatomic) NSMutableArray* sectionsArray;
 
 @end
 
@@ -35,6 +35,38 @@
     
     self.namesArray = array;
     
+    self.sectionsArray = [NSMutableArray array];
+    
+    
+    NSString* currentLetter = nil;
+    
+    for (NSString* string in self.namesArray){
+        
+        NSString* firstLetter = [string substringToIndex:1];
+        
+        DMSection* section = nil;
+        
+        if (![currentLetter isEqualToString:firstLetter]){
+            
+            section = [[DMSection alloc] init];
+            
+            
+            section.sectionName = firstLetter;
+            
+            section.itemsArray = [NSMutableArray array];
+            currentLetter = firstLetter;
+            [self.sectionsArray addObject:section];
+            
+        }else{
+            
+            section = [self.sectionsArray lastObject];
+            
+        }
+        
+        [section.itemsArray addObject:string];
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,12 +78,48 @@
 
 
 
+
+
+
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+    
+    
+    NSMutableArray* array = [NSMutableArray array];
+    
+    for (DMSection* section in self.sectionsArray){
+        
+        [array addObject:section.sectionName];
+    }
+    
+    return array;
+}
+
+
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    
+    return [self.sectionsArray count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    
+    
+    return [[self.sectionsArray objectAtIndex:section] sectionName];
+    
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     
-    return [self.namesArray count];
+    DMSection* sec = [self.sectionsArray objectAtIndex:section];
     
+    return [sec.itemsArray count];
 }
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -65,7 +133,11 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    cell.textLabel.text = [self.namesArray objectAtIndex:indexPath.row];
+    DMSection* section = [self.sectionsArray objectAtIndex:indexPath.section];
+    
+    NSString* name = [section.itemsArray objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = name;
     
     return cell;
 }

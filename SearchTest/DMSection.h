@@ -11,6 +11,6 @@
 @interface DMSection : NSObject
 
 @property (strong, nonatomic) NSString* sectionName;
-@property (strong,nonatomic) NSArray* itemsArray;
+@property (strong,nonatomic) NSMutableArray* itemsArray;
 
 @end
