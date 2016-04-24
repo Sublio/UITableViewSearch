@@ -14,7 +14,8 @@
 
 
 @property (strong, nonatomic) NSArray* namesArray;
-@property (strong, nonatomic) NSMutableArray* sectionsArray;
+@property (strong, nonatomic) NSArray* sectionsArray;
+@property (strong, nonatomic) NSOperation* currentOperation;
 
 @end
 
@@ -25,7 +26,7 @@
     
     NSMutableArray* array = [NSMutableArray array];
     
-    for (int i = 0; i<100;i++){
+    for (int i = 0; i<20000;i++){
         
         [array addObject:[[NSString randomAlphanumericString]capitalizedString]];
         
@@ -35,12 +36,48 @@
     
     self.namesArray = array;
     
-    self.sectionsArray = [NSMutableArray array];
+    //self.sectionsArray = [self generateSectionsFromArray:self.namesArray withFilter:self.searchBar.text];
+    
+    //[self.tableView reloadData];
+    
+    [self generateSectionsInBackgroundFromArray:self.namesArray withFilter:self.searchBar.text];
+}
+
+- (void) generateSectionsInBackgroundFromArray:(NSArray*)array withFilter:(NSString*) filterString{
+    
+    [self.currentOperation cancel];
+    
+    __weak ViewController* weakSelf = self;
+    
+    self.currentOperation = [NSBlockOperation blockOperationWithBlock:^{
+        NSArray* sectionsArray = [weakSelf generateSectionsFromArray:array withFilter:filterString];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.sectionsArray = sectionsArray;
+            [weakSelf.tableView reloadData];
+            
+            self.currentOperation = nil;
+        });
+    }];
+    
+    [self.currentOperation start];
+    
+}
+
+-(NSArray*)generateSectionsFromArray:(NSArray*)array withFilter:(NSString*) filterString{
+    
+    NSMutableArray* sectionsArray = [NSMutableArray array];
     
     
     NSString* currentLetter = nil;
     
-    for (NSString* string in self.namesArray){
+    for (NSString* string in array){
+        
+        if ([filterString length] >0 && [string rangeOfString:filterString].location == NSNotFound){
+            
+            continue;
+        }
+        
         
         NSString* firstLetter = [string substringToIndex:1];
         
@@ -55,17 +92,18 @@
             
             section.itemsArray = [NSMutableArray array];
             currentLetter = firstLetter;
-            [self.sectionsArray addObject:section];
+            [sectionsArray addObject:section];
             
         }else{
             
-            section = [self.sectionsArray lastObject];
+            section = [sectionsArray lastObject];
             
         }
         
         [section.itemsArray addObject:string];
         
     }
+    return sectionsArray;
     
 }
 
@@ -75,9 +113,6 @@
 }
 
 #pragma mark - UITableViewDataSource
-
-
-
 
 
 
@@ -94,6 +129,8 @@
     
     return array;
 }
+
+
 
 
 
@@ -140,6 +177,35 @@
     cell.textLabel.text = name;
     
     return cell;
+}
+
+#pragma  mark - UISearchBarDelegate
+
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    
+    
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+    NSLog(@"textDidChange %@", searchText);
+    
+    
+    //self.sectionsArray = [self generateSectionsFromArray:self.namesArray withFilter:searchText];
+    
+    //[self.tableView reloadData];
+    [self generateSectionsInBackgroundFromArray:self.namesArray withFilter:self.searchBar.text];
+    
 }
 
 @end

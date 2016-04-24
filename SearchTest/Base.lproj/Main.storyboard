@@ -12,6 +12,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="prominent" showsCancelButton="YES" id="wVe-eP-QDd">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            <connections>
+                                <outlet property="delegate" destination="9i0-Ld-AoR" id="s6x-me-lOo"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="n0l-Gq-sJA">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -22,10 +30,13 @@
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="9i0-Ld-AoR" id="rnU-K0-XvC"/>
-                            <outlet property="delegate" destination="9i0-Ld-AoR" id="txq-xM-uUJ"/>
+                            <outlet property="delegate" destination="9i0-Ld-AoR" id="0K7-2v-VE7"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Mega Search" id="HKt-ym-e4T"/>
+                    <connections>
+                        <outlet property="searchBar" destination="wVe-eP-QDd" id="A70-kx-Hra"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cW8-6h-EHf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
